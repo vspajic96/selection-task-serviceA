@@ -50,9 +50,15 @@ class TransactionService implements TransactionServiceInterface{
     @Transactional
     @Override
     public void sendTransactionPerformedEvent(Transaction transaction) {
-        BigInteger amount = new BigDecimal(transaction.getAmount()).toBigInteger();
+        BigDecimal amountInEuros = new BigDecimal(transaction.getAmount());
+        BigInteger amountInCents = amountToCents(amountInEuros);
         String currency = transaction.getCurrency();
-        eventPublisher.send(new TransactionPerformedEvent(amount, currency));
+        eventPublisher.send(new TransactionPerformedEvent(amountInCents, currency));
+    }
+
+    public BigInteger amountToCents(BigDecimal amountInEuros) {
+        amountInEuros = amountInEuros.multiply(new BigDecimal("100"));
+        return amountInEuros.toBigInteger();
     }
 
 

@@ -1,6 +1,5 @@
 package com.vedran.servicea.event;
 
-import com.vedran.servicea.domain.Transaction;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

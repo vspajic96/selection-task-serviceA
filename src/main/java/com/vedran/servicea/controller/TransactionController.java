@@ -20,7 +20,8 @@ public class TransactionController {
     }
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
-                 produces = {MediaType.APPLICATION_JSON_VALUE})
+                 produces = {MediaType.APPLICATION_JSON_VALUE},
+                 path="/send")
     ResponseEntity<Transaction> makeTransaction(@RequestBody Transaction transaction) {
         transactionServiceInterface.performTransaction(transaction);
         return ResponseEntity.ok(transaction);
