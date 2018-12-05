@@ -2,7 +2,6 @@ package com.vedran.servicea.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vedran.servicea.domain.Transaction;
-import com.vedran.servicea.event.TransactionPerformedEvent;
 import com.vedran.servicea.service.TransactionServiceInterface;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,24 +40,12 @@ public class TransactionControllerTest {
     public void makeValidTransactionTest() throws Exception {
         Transaction transactionValid = new Transaction(50, "EUR");
 
-        MockHttpServletResponse responseValid = mvc.perform(post("").contentType(MediaType.APPLICATION_JSON)
+        MockHttpServletResponse responseValid = mvc.perform(post("/send").contentType(MediaType.APPLICATION_JSON)
                 .content(json.write(transactionValid).getJson()))
                 .andReturn().getResponse();
 
         assertThat(responseValid.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(responseValid.getContentAsString()).isEqualTo(json.write(transactionValid).getJson());
-    }
-
-    @Test
-    public void makeInvalidTransactionTest() throws Exception {
-        Transaction transactionInvalid = new Transaction(50, "BAM");
-
-        MockHttpServletResponse responseInvalid = mvc.perform(post("").contentType(MediaType.APPLICATION_JSON)
-                .content(json.write(transactionInvalid).getJson()))
-                .andReturn().getResponse();
-
-        assertThat(responseInvalid.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-
     }
 
 }

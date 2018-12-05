@@ -1,7 +1,9 @@
 package com.vedran.servicea.service;
 
 import com.vedran.servicea.domain.Transaction;
-import com.vedran.servicea.event.TransactionPerformedEvent;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public interface TransactionServiceInterface {
 
@@ -10,4 +12,5 @@ public interface TransactionServiceInterface {
     boolean transactionValidCurrency(String currency);
 
     void sendTransactionPerformedEvent(Transaction transaction);
+    BigInteger amountToCents(BigDecimal amountInEuros);
 }

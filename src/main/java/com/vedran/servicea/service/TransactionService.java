@@ -56,6 +56,7 @@ class TransactionService implements TransactionServiceInterface{
         eventPublisher.send(new TransactionPerformedEvent(amountInCents, currency));
     }
 
+    @Override
     public BigInteger amountToCents(BigDecimal amountInEuros) {
         amountInEuros = amountInEuros.multiply(new BigDecimal("100"));
         return amountInEuros.toBigInteger();

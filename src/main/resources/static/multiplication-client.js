@@ -23,5 +23,20 @@ $(document).ready(function() {
             async: "false"
         });
 
+        $.getJSON('//' + window.location.hostname + ':8081/balance', {get_param: 'amount'}, function(json){
+            var account_data = '';
+            $.each(json, function(key, value){
+                account_data += '<tr>';
+
+                account_data += '<td>' + value.balance.substring(0, value.balance.length - 2) +
+                    '.' + value.balance.substring(value.balance.length-2, value.balance.length) + '</td>';
+                account_data += '<td>' + value.updatedAt.substring(0, 10) + " " +
+                    value.updatedAt.substring(11, 19) + '</td>';
+
+                account_data += '</tr>';
+            });
+            $('#table').append(account_data);
+        });
+
     });
 });

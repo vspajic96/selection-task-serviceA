@@ -50,10 +50,11 @@ public class TransactionServiceTest {
     @Test
     public void sendTransactionPerformedEventTest() {
         Transaction transaction = new Transaction(50, "EUR");
-        BigInteger amount = new BigDecimal(transaction.getAmount()).toBigInteger();
+        BigDecimal amountInEuros = new BigDecimal(transaction.getAmount());
+        BigInteger amountInCents = transactionService.amountToCents(amountInEuros);
         String currency = transaction.getCurrency();
 
-        TransactionPerformedEvent event = new TransactionPerformedEvent(amount, currency);
+        TransactionPerformedEvent event = new TransactionPerformedEvent(amountInCents, currency);
         transactionService.sendTransactionPerformedEvent(transaction);
 
         verify(eventPublisher).send(eq(event));
@@ -80,6 +81,13 @@ public class TransactionServiceTest {
 
         assertEquals(InvalidAmountException.class, e1.getClass());
         assertEquals(InvalidCurrencyException.class, e2.getClass());
+    }
+
+    @Test
+    public void eurosToCentsTest() {
+        BigDecimal amountInEuros = new BigDecimal("1.66");
+        BigInteger amountInCents = new BigInteger("166");
+        assertEquals(transactionService.amountToCents(amountInEuros), amountInCents);
     }
 
 
