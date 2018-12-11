@@ -34,7 +34,8 @@ $(document).ready(function() {
                 var account_data = '';
                 $.each(json, function (key, value) {
                     account_data += '<tr>';
-
+                    // Format received balance string to display amount in euros as decimal value
+                    // instead of cents
                     account_data += '<td>' + value.balance.substring(0, value.balance.length - 2) +
                         '.' + value.balance.substring(value.balance.length - 2, value.balance.length) + '</td>';
                     account_data += '<td>' + value.updatedAt.substring(0, 10) + " " +

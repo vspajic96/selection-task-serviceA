@@ -7,7 +7,9 @@ import lombok.ToString;
 
 import java.io.Serializable;
 
-
+/*
+    Transaction model
+ */
 @RequiredArgsConstructor
 @Getter
 @ToString

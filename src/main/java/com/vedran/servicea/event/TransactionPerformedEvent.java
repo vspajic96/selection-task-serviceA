@@ -8,6 +8,9 @@ import lombok.ToString;
 import java.io.Serializable;
 import java.math.BigInteger;
 
+/*
+    Model of an event to be sent through RabbitMQ for consumption in service-b
+ */
 @RequiredArgsConstructor
 @Getter
 @ToString

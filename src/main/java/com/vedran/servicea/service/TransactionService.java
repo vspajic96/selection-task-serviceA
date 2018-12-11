@@ -23,6 +23,9 @@ class TransactionService implements TransactionServiceInterface{
         this.eventPublisher = eventPublisher;
     }
 
+    /*
+        Check if criteria for valid transaction are satisfied then send a TransactionPerformedEvent
+     */
     @Override
     public void performTransaction(Transaction transaction) {
         if (transactionValidAmount(transaction.getAmount())) {
@@ -47,10 +50,14 @@ class TransactionService implements TransactionServiceInterface{
         return currency.equals("EUR");
     }
 
+    /*
+        Call the EventPublisher class' send() function to send a RabbitMQ message for consumption in service-b
+     */
     @Transactional
     @Override
     public void sendTransactionPerformedEvent(Transaction transaction) {
         BigDecimal amountInEuros = new BigDecimal(transaction.getAmount());
+        // Convert euros to cents before publishing message
         BigInteger amountInCents = amountToCents(amountInEuros);
         String currency = transaction.getCurrency();
         eventPublisher.send(new TransactionPerformedEvent(amountInCents, currency));

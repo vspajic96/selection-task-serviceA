@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/*
+    Handles publishing messages for consumption in service-b
+    Exchange and routing key being used are defined in application-properties resource file
+ */
 @Slf4j
 @Component
 public class EventPublisher {
@@ -26,6 +30,9 @@ public class EventPublisher {
         this.transactionRoutingKey = transactionRoutingKey;
     }
 
+    /*
+        Send event and log it for confirmation
+     */
     public void send(final TransactionPerformedEvent event) {
         rabbitTemplate.convertAndSend(transactionExchange, transactionRoutingKey, event);
         log.info("Transaction performed event sent: {}", event.toString());

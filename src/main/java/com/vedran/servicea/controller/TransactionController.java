@@ -19,6 +19,17 @@ public class TransactionController {
         this.transactionServiceInterface = transactionServiceInterface;
     }
 
+    /*
+        Receive JSON message from POST request body.
+        JSON message must be formatted as following:
+                 {
+                "amount": 10,
+                "currency": "EUR"
+                }
+       where amount is not lower than -100000000 or higher than -100000000, and currency is EUR
+
+       Upon correct request calls TransactionService's performTransaction() method
+     */
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
                  produces = {MediaType.APPLICATION_JSON_VALUE},
                  path="/send")
